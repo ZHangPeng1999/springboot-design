@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @Data
@@ -15,17 +14,12 @@ public class Student {
     @Id
     private int id;
     private String name;
-    private boolean selected;
-    @Column(columnDefinition = "timestamp default current_timestamp",
-            insertable = false,
-            updatable = false)
-    private LocalDateTime insertTime;
-    @Column(columnDefinition = "timestamp default current_timestamp"+" on update current_timestamp",
-            insertable = false,
-            updatable = false)
-    private LocalDateTime updateTime;
+    private boolean isSelectRoot;//是否能被选择
     @ManyToOne
-    private Teacher teacher;
+    private Teacher teacher;//如果这个外键不为空则为被选中
     @OneToMany(mappedBy = "student")
     private List<Elective> electives;
+
+
+
 }

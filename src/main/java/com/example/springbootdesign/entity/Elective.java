@@ -5,7 +5,6 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 /**
  * 选课表
@@ -18,19 +17,12 @@ public class Elective {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String detail;
-    private int grade;
-    @Column(columnDefinition = "timestamp default current_timestamp",
-            insertable = false,
-            updatable = false)
-
-    private LocalDateTime insertTime;
-    @Column(columnDefinition = "timestamp default current_timestamp"+" on update current_timestamp",
-            insertable = false,
-            updatable = false)
-    private LocalDateTime updateTime;
+    private int grade;//课程成绩
     @ManyToOne
     private Student student;
     @ManyToOne
     private Course course;
+
+
 
 }
