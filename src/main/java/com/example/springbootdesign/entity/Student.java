@@ -19,7 +19,8 @@ public class Student {
     private Teacher teacher;//如果这个外键不为空则为被选中
     @OneToMany(mappedBy = "student")
     private List<Elective> electives;
-
+    @OneToMany(mappedBy = "student")
+    private List<DirectionElective> directionElectives;
 
 
 }

@@ -6,22 +6,18 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 /**
- * 选课表
+ * 方向选择表
  */
 @Entity
-@NoArgsConstructor
 @Data
-public class Elective {
+@NoArgsConstructor
+public class DirectionElective {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     private String detail;
-    private int grade;//课程成绩
     @ManyToOne
     private Student student;
     @ManyToOne
-    private Course course;
-
-
-
+    private Direction direction;
 }

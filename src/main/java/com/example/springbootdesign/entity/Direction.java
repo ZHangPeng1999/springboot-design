@@ -4,24 +4,17 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
-/**
- * 选课表
- */
+import java.util.List;
 @Entity
-@NoArgsConstructor
 @Data
-public class Elective {
+@NoArgsConstructor
+public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
-    private String detail;
-    private int grade;//课程成绩
-    @ManyToOne
-    private Student student;
-    @ManyToOne
-    private Course course;
+    private String name;
+    private int value;//方向权值
 
-
-
+    @OneToMany(mappedBy = "direction")
+    private List<DirectionElective> directionElectives;
 }
