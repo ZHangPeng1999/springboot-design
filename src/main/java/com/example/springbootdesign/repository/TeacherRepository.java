@@ -1,4 +1,8 @@
 package com.example.springbootdesign.repository;
 
-public interface TeacherRepository<Teacher,Integer> extends BaseRepository<Teacher,Integer>{
+import com.example.springbootdesign.entity.Teacher;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TeacherRepository extends BaseRepository<Teacher,Integer>{
 }

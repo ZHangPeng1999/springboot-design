@@ -1,6 +1,8 @@
 package com.example.springbootdesign.repository;
 
 import com.example.springbootdesign.entity.Elective;
+import org.springframework.stereotype.Repository;
 
-public interface ElectiveRepository<Elective,Integer> extends BaseRepository<Elective,Integer>{
+@Repository
+public interface ElectiveRepository extends BaseRepository<Elective,Integer>{
 }

@@ -1,6 +1,8 @@
 package com.example.springbootdesign.repository;
 
 import com.example.springbootdesign.entity.Direction;
+import org.springframework.stereotype.Repository;
 
-public interface DirectionRepository<Direction,Integer> extends BaseRepository<Direction,Integer>{
+@Repository
+public interface DirectionRepository extends BaseRepository<Direction,Integer>{
 }
