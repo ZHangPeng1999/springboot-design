@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 @Entity
 @Data
@@ -11,10 +12,17 @@ import java.util.List;
 public class Direction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int value;//方向权值
-
+    private Float value;//方向权值
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+    @Column(columnDefinition = "timestamp default current_timestamp"+" on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
     @OneToMany(mappedBy = "direction")
     private List<DirectionElective> directionElectives;
 }

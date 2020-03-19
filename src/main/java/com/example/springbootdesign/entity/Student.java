@@ -12,9 +12,19 @@ import java.util.List;
 
 public class Student {
     @Id
-    private int id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Integer id;
+    private Integer studentId;
     private String name;
-    private boolean isSelectRoot;//是否能被选择
+    private Boolean isSelectRoot;//是否能被选择
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+    @Column(columnDefinition = "timestamp default current_timestamp"+" on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
     @ManyToOne
     private Teacher teacher;//如果这个外键不为空则为被选中
     @OneToMany(mappedBy = "student")

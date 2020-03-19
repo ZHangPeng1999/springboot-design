@@ -13,11 +13,18 @@ import java.util.List;
 public class Course {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String name;
-    private int value;//课程权值
-    private int minGrade;//课程最低分
-
+    private Float value;//课程权值
+    private Float minGrade;//课程最低分
+    @Column(columnDefinition = "timestamp default current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime insertTime;
+    @Column(columnDefinition = "timestamp default current_timestamp"+" on update current_timestamp",
+            insertable = false,
+            updatable = false)
+    private LocalDateTime updateTime;
     @OneToMany(mappedBy = "course")
     private List<Elective> electives;
 }

@@ -33,12 +33,10 @@ public class EntityTest {
     @Test
     public void init(){
         Student stu=new Student();
-        stu.setId(2017214215);
         stu.setName("张澎");
 
         studentRepository.save(stu);
         Student stu1=new Student();
-        stu1.setId(2017214216);
         stu1.setName("张师院");
         studentRepository.save(stu1);
 
@@ -83,7 +81,7 @@ public class EntityTest {
         Elective elective = new Elective();
         elective.setCourse(cou);
         elective.setStudent(stu);
-        elective.setGrade(92);
+        elective.setGrade((float) 92.0);
         electiveRepository.save(elective);
 
     }
