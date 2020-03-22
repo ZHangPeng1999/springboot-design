@@ -14,7 +14,6 @@ public class Direction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String name;
-    private Float value;//方向权值
     @Column(columnDefinition = "timestamp default current_timestamp",
             insertable = false,
             updatable = false)

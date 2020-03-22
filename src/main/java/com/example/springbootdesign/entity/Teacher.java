@@ -14,6 +14,7 @@ public class Teacher {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+    private Integer teacherId;//教师工号
     private String name;
     private String password;
     private Integer SelectStudentNum;//能选择的学生上限
