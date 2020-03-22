@@ -1,7 +1,9 @@
 package com.example.springbootdesign.service;
 
-import com.example.springbootdesign.entity.Course;
+import com.example.springbootdesign.entity.*;
 import com.example.springbootdesign.repository.CourseRepository;
+import com.example.springbootdesign.repository.ElectiveRepository;
+import com.example.springbootdesign.repository.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +13,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class CourseService {
     @Autowired
     private CourseRepository courseRepository;
+    @Autowired
+    private ElectiveRepository electiveRepository;
+    @Autowired
+    private StudentRepository studentRepository;
     /**
      * 添加课程
      * @param name
@@ -29,5 +35,13 @@ public class CourseService {
         cou.setName(name);
         cou.setValue(value);
         cou.setMinGrade(minn);
+    }
+    private void update(Integer studentId,Integer courseId){
+        Elective elective=new Elective();
+        Course course=courseRepository.findById(courseId).orElse(null);
+        Student student=studentRepository.findById(studentId).orElse(null);
+        elective.setStudent(student);
+        elective.setCourse(course);
+        electiveRepository.save(elective);
     }
 }
