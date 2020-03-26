@@ -29,5 +29,9 @@ public class Teacher {
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "teacher")
     private List<Student> students;//已选择学生 已选择学生数目直接统计list总数即可
+    @OneToMany(mappedBy = "teacher")
+    private List<Course> courses;
+    @OneToMany(mappedBy = "teacher")
+    private List<Direction>  directions;
 
 }

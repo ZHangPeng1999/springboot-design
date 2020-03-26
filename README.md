@@ -30,20 +30,22 @@ Init
         + 姓名属性 （在填写报名时可提供校验）
         + isSelected 表示根据课程成绩等内容计算后是否能被选择
         + teacher 与教师类 根据是否被选择 有一个 MangToOne的映射
-        + elective 与课程类有一个中间表elective 根据中间表维护与课程ManyToMany的关系
+        + courseElective 与课程类有一个中间表elective 根据中间表维护与课程ManyToMany的关系
     2. 教师类
         + id 
         + password 教师身份校验
         + SelectStudentNum 能够选择的学生数
         + WantStudentNum 希望选择的学生上限
-        + student 与学生的ManyToOne 映射
+        + student 与学生的ManyToOne 映射  
+        + courses 教师创建的课程   
+        + directions 教师创建的方向
     3. 课程类
         + id
         + name 名称
         + minGrade 最低分数线
         + value 权重
-        + elective 与选课表的映射关系
-    4. elective(选课表)
+        + courseElective 与选课表的映射关系
+    4. courseElective(选课表)
         + id
         + grade 成绩
         + detail 描述
@@ -61,14 +63,11 @@ Init
 + 教师：   
     1.添加/修改教师信息    
     2.添加/修改教师信息     
-    
+    3.添加/修改课程   
+    4.添加/修改方向 
 + 学生:   
     1.添加学生  
     2.选择教师   
-    3.修改学生信息    
-+ 方向：   
-    1.添加/修改方向   
-    2.建立与学生的联系
-+ 课程：   
-    1.添加/修改课程   
-    2.建立与学生的联系
+    3.修改学生信息      
+    4.建立课程与学生的联系   
+    5.建立方向与学生的联系

@@ -2,15 +2,11 @@ package com.example.springbootdesign.entity;
 
 import com.example.springbootdesign.repository.*;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.persistence.EntityManager;
-import javax.swing.text.TabExpander;
 
 @SpringBootTest
 @Slf4j
@@ -23,7 +19,7 @@ public class EntityTest {
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
-    private ElectiveRepository electiveRepository;
+    private CourseElectiveRepository courseElectiveRepository;
     @Autowired
     private TeacherRepository teacherRepository;
     @Autowired
@@ -78,11 +74,11 @@ public class EntityTest {
     public void test_CourseToStu(){
         Course cou = courseRepository.findById(1).orElse(null);
         Student stu = studentRepository.findById(2017214215).orElse(null);
-        Elective elective = new Elective();
-        elective.setCourse(cou);
-        elective.setStudent(stu);
-        elective.setGrade((float) 92.0);
-        electiveRepository.save(elective);
+        CourseElective courseElective = new CourseElective();
+        courseElective.setCourse(cou);
+        courseElective.setStudent(stu);
+        courseElective.setGrade((float) 92.0);
+        courseElectiveRepository.save(courseElective);
 
     }
     @Test

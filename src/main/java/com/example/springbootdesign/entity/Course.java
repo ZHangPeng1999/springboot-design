@@ -26,5 +26,7 @@ public class Course {
             updatable = false)
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "course")
-    private List<Elective> electives;
+    private List<CourseElective> courseElectives;
+    @ManyToOne
+    private Teacher teacher;
 }

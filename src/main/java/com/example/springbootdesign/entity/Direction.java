@@ -24,4 +24,6 @@ public class Direction {
     private LocalDateTime updateTime;
     @OneToMany(mappedBy = "direction")
     private List<DirectionElective> directionElectives;
+    @ManyToOne
+    private Teacher teacher;
 }

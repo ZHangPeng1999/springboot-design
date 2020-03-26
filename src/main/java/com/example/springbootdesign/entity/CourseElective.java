@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 @Entity
 @NoArgsConstructor
 @Data
-public class Elective {
+public class CourseElective {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
