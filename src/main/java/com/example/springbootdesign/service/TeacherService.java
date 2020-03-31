@@ -21,7 +21,8 @@ public class TeacherService {
     private DirectionRepository directionRepository;
     @Autowired
     private DirectionElectiveRepository directionElectiveRepository;
-
+    @Autowired
+    private StudentRepository studentRepository;
     /**
      * 添加教师
      * @param teacherId
@@ -30,7 +31,7 @@ public class TeacherService {
      * @param SelectStudentNum
      * @param WantStudentNum
      */
-    private Teacher add(Integer teacherId,String name,String password,Integer SelectStudentNum,Integer WantStudentNum){
+    private Teacher addTeacher(Integer teacherId,String name,String password,Integer SelectStudentNum,Integer WantStudentNum){
         Teacher tea=new Teacher();
         tea.setName(name);
         tea.setTeacherId(teacherId);
@@ -47,7 +48,7 @@ public class TeacherService {
      * @param name
      * @param password
      */
-    private Teacher add(Integer teacherId,String name,String password) {
+    private Teacher addTeacher(Integer teacherId,String name,String password) {
         Teacher tea = new Teacher();
         tea.setName(name);
         tea.setTeacherId(teacherId);
@@ -59,7 +60,7 @@ public class TeacherService {
     /**
      * 修改教师密码 姓名
      */
-    private Teacher update(Integer id,String name,String password){
+    private Teacher updateTeacher(Integer id,String name,String password){
         Teacher tea=teacherRepository.findById(id).orElse(null);
         if (tea!=null){
             tea.setName(name);
@@ -70,7 +71,7 @@ public class TeacherService {
     /**
      * 修改密码
      */
-    private Teacher  update(Integer teacherId,String password){
+    private Teacher  updateTeacher(Integer teacherId,String password){
         Teacher tea = teacherRepository.findById(teacherId).orElse(null);
         if (tea!=null) {
             tea.setPassword(password);
@@ -82,7 +83,7 @@ public class TeacherService {
     /**
      * 修改学生数 范围数
      */
-    private Teacher update(Integer id,Integer selectNum,Integer wantNum){
+    private Teacher updateTeacher(Integer id,Integer selectNum,Integer wantNum){
         Teacher tea = teacherRepository.findById(id).orElse(null);
         if (tea!=null){
             tea.setSelectStudentNum(selectNum);
@@ -93,17 +94,40 @@ public class TeacherService {
     }
 
     /**
+     * 添加内定学生
+     * @param studentId
+     * @param TeacherId
+     * @param StudentName
+     * @return
+     */
+    private Student preAddStudent(Integer studentId,Integer TeacherId,String StudentName){
+        Student stu=studentRepository.find(studentId);
+        Teacher tea=teacherRepository.findById(TeacherId).orElse(null);
+        if(stu==null){
+            stu=new Student();
+            stu.setName(StudentName);
+            stu.setStudentId(studentId);
+            stu.setTeacher(tea);
+            studentRepository.save(stu);
+        } else{
+          stu.setTeacher(tea);
+        }
+        return stu;
+    }
+
+
+    /**
      * 查找选择老师的学生列表
      * @param id
      * @return
      */
-    private List<Student> list(Integer id){
+    private List<Student> listStudents(Integer id){
         Teacher tea=teacherRepository.findById(id).orElse(null);
-        List<Student> students=new ArrayList<>();
         if(tea!=null){
-            students=tea.getStudents();
+            List<Student> students=tea.getStudents();
+            return students;
         }
-        return students;
+        return List.of();
     }
 
 
@@ -115,7 +139,7 @@ public class TeacherService {
      * @param minn
      * @return
      */
-    private Course add(Integer teacherId,String name,Float value,Float minn){
+    private Course addCourse(Integer teacherId,String name,Float value,Float minn){
         Teacher tea=teacherRepository.findById(teacherId).orElse(null);
         Course cou=new Course();
         cou.setName(name);
@@ -134,7 +158,7 @@ public class TeacherService {
      * @param minn
      * @return
      */
-    private Course update(Integer id,String name,Float value,Float minn){
+    private Course updateCourse(Integer id,String name,Float value,Float minn){
         Course cou=courseRepository.findById(id).orElse(null);
         if(cou!=null) {
             cou.setName(name);
@@ -150,7 +174,7 @@ public class TeacherService {
      * @param name
      * @return
      */
-    private Direction add(Integer teacherId,String name){
+    private Direction addDirection(Integer teacherId,String name){
         Direction dir=new Direction();
         Teacher tea=teacherRepository.findById(teacherId).orElse(null);
         dir.setName(name);
@@ -165,4 +189,13 @@ public class TeacherService {
         }
         return dir;
     }
+    /**
+     * 获取所有学生列表 并根据课程加权分排序 删除某课程分数小于要求最低分的学生
+     * @return
+     */
+    private List<Student> sortStudent(){
+        List<Student> students=new ArrayList<>();
+        return students;
+    }
+
 }

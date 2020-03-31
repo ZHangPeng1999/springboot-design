@@ -29,7 +29,7 @@ public class StudentService {
      * @param studentId
      * @param name
      */
-    private void add(Integer studentId,String name){
+    private void addStudent(Integer studentId,String name){
         Student stu=new Student();
         stu.setName(name);
         stu.setStudentId(studentId);
@@ -42,7 +42,7 @@ public class StudentService {
      * @param teacherId
      * @return 选择是否成功
      */
-    private Boolean update(Integer studentId,Integer teacherId){
+    private Boolean updateStudent(Integer studentId,Integer teacherId){
         Student stu=studentRepository.find(studentId);
         if(stu.getIsSelectRoot().equals(true)){
             Teacher tea=teacherRepository.findById(teacherId).orElse(null);
@@ -60,7 +60,7 @@ public class StudentService {
      * @param studentId
      * @param name
      */
-    private void update(Integer id,Integer studentId,String name){
+    private void updateStudent(Integer id,Integer studentId,String name){
         Student stu=studentRepository.findById(id).orElse(null);
         stu.setName(name);
         stu.setStudentId(studentId);
@@ -116,7 +116,7 @@ public class StudentService {
      * 返回所有方向
      * @return
      */
-    private List<Direction> list(){
+    private List<Direction> listDirections(){
         return directionRepository.list();
     }
     /**
@@ -124,9 +124,8 @@ public class StudentService {
      * @param id
      * @return
      */
-    private List<Direction> listDirection(Integer id){
+    private List<Direction> listDirections(Integer id){
         return directionRepository.list(id);
     }
-
 
 }
