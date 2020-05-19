@@ -28,38 +28,7 @@ public class EntityTest {
     private DirectionElectiveRepository directionElectiveRepository;
     @Test
     public void init(){
-        Student stu=new Student();
-        stu.setName("张澎");
 
-        studentRepository.save(stu);
-        Student stu1=new Student();
-        stu1.setName("张师院");
-        studentRepository.save(stu1);
-
-        Student stu2=new Student();
-        stu2.setId(2017214217);
-        stu2.setName("郝伟");
-        studentRepository.save(stu2);
-
-        Teacher tea = new Teacher();
-        tea.setName("波哥");
-        teacherRepository.save(tea);
-
-        Course cou = new Course();
-        cou.setName("java");
-        courseRepository.save(cou);
-
-        Course cou2 = new Course();
-        cou2.setName("docker");
-        courseRepository.save(cou2);
-
-        Direction dir = new Direction();
-        dir.setName("微小");
-        directionRepository.save(dir);
-
-        Direction dir1 = new Direction();
-        dir1.setName("xx系统");
-        directionRepository.save(dir1);
 
     }
     @Test

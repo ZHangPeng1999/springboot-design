@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Repository
 public interface TeacherRepository extends BaseRepository<Teacher,Integer>{
-    @Query("from Teacher t where t.teacherId=:teacherId")
+    @Query("from Teacher t where t.user.number=:teacherId")
     Teacher find(@Param("teacherId")Integer teacherId);
 
     @Modifying
     @Transactional
-    @Query("update Teacher t set t.name=:name,t.password=:password where t.teacherId=:teacherId")
+    @Query("update Teacher t set t.user.name=:name,t.password=:password where t.user.number=:teacherId")
     Integer update(@Param("name")String name,@Param("password")String password,@Param("teacherId")Integer teacherId);
 
 

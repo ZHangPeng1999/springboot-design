@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StudentRepository extends BaseRepository<Student,Integer>{
-    @Query("from Student s where  s.studentId=:studentId")
+    @Query("from Student s where  s.user.number=:studentId")
     Student find(@Param("studentId")Integer studentId);
 }

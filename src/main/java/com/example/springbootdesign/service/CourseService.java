@@ -6,11 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.swing.*;
 import java.util.List;
 
+//所有与课程/方向相关的服务都放在CourseService
 @Service
 @Transactional
-public class StudentService {
+public class CourseService {
+
     @Autowired
     private CourseRepository courseRepository;
     @Autowired
@@ -23,57 +26,73 @@ public class StudentService {
     private StudentRepository studentRepository;
     @Autowired
     private TeacherRepository teacherRepository;
-//  学生
     /**
-     * 添加学生
-     * @param studentId
-     * @param name
-     */
-    private void addStudent(Integer studentId,String name){
-        Student stu=new Student();
-        stu.setName(name);
-        stu.setStudentId(studentId);
-        studentRepository.save(stu);
-    }
-
-    /**
-     * 学生选择导师
-     * @param studentId
+     * 添加课程
      * @param teacherId
-     * @return 选择是否成功
+     * @param name
+     * @param value
+     * @param minn
+     * @return
      */
-    private Boolean updateStudent(Integer studentId,Integer teacherId){
-        Student stu=studentRepository.find(studentId);
-        if(stu.getIsSelectRoot().equals(true)){
-            Teacher tea=teacherRepository.findById(teacherId).orElse(null);
-            if(tea.getStudents().size()<tea.getSelectStudentNum()) {
-                stu.setTeacher(tea);
-                return true;
-            }
-        }
-        return false;
+    public Course addCourse(Integer teacherId, String name, Float value, Float minn){
+        Teacher tea=teacherRepository.findById(teacherId).orElse(null);
+        Course cou=new Course();
+        cou.setName(name);
+        cou.setValue(value);
+        cou.setMinGrade(minn);
+        cou.setTeacher(tea);
+        courseRepository.save(cou);
+        return cou;
     }
 
     /**
-     * 修改学生学号姓名
+     * 更新课程信息
      * @param id
-     * @param studentId
      * @param name
+     * @param value
+     * @param minn
+     * @return
      */
-    private void updateStudent(Integer id,Integer studentId,String name){
-        Student stu=studentRepository.findById(id).orElse(null);
-        stu.setName(name);
-        stu.setStudentId(studentId);
+    public Course updateCourse(Integer id,String name,Float value,Float minn){
+        Course cou=courseRepository.findById(id).orElse(null);
+        if(cou!=null) {
+            cou.setName(name);
+            cou.setValue(value);
+            cou.setMinGrade(minn);
+        }
+        return cou;
     }
 
-//   课程
+    /**
+     * 添加方向
+     * @param teacherId
+     * @param name
+     * @return
+     */
+    public Direction addDirection(Integer teacherId, String name){
+        Direction dir=new Direction();
+        Teacher tea=teacherRepository.findById(teacherId).orElse(null);
+        dir.setName(name);
+        dir.setTeacher(tea);
+        directionRepository.save(dir);
+        return dir;
+    }
+    public Direction updateDirection(Integer id,String name){
+        Direction dir=directionRepository.findById(id).orElse(null);
+        if(dir!=null) {
+            dir.setName(name);
+        }
+        return dir;
+    }
+
+    //   课程
     /**
      * 添加学生与课程关联
      * @param studentId
      * @param courseId
      * @return
      */
-    private CourseElective addCourseElective(Integer studentId, Integer courseId){
+    public CourseElective addCourseElective(Integer studentId, Integer courseId){
         CourseElective courseElective =new CourseElective();
         Course course=courseRepository.findById(courseId).orElse(null);
         Student student=studentRepository.findById(studentId).orElse(null);
@@ -90,7 +109,7 @@ public class StudentService {
      * @param id
      * @return
      */
-    private List<Course> listCourse(Integer id){
+    public List<Course> listCourse(Integer id){
         return courseRepository.list(id);
     }
 
@@ -100,7 +119,7 @@ public class StudentService {
      * @param studentId
      * @param directionId
      */
-    private DirectionElective addDirectionElective(Integer studentId,Integer directionId){
+    public DirectionElective addDirectionElective(Integer studentId,Integer directionId){
         DirectionElective directionElective = new DirectionElective();
         Direction direction=directionRepository.findById(directionId).orElse(null);
         Student student= studentRepository.findById(studentId).orElse(null);
@@ -116,7 +135,7 @@ public class StudentService {
      * 返回所有方向
      * @return
      */
-    private List<Direction> listDirections(){
+    public List<Direction> listDirections(){
         return directionRepository.list();
     }
     /**
@@ -124,8 +143,13 @@ public class StudentService {
      * @param id
      * @return
      */
-    private List<Direction> listDirections(Integer id){
+    public List<Direction> listDirections(Integer id){
         return directionRepository.list(id);
     }
 
+    public Course addCourse(Course course) {
+        courseRepository.save(course);
+        courseRepository.refresh(course);
+        return  course;
+    }
 }
