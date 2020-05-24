@@ -46,9 +46,9 @@ public class LoginController {
     private  String roleAdmin;
 
     @PostMapping("login")
-    public Map login(@RequestBody Teacher login, HttpServletResponse response){
-        Teacher teacher= Optional.ofNullable(userService.getTeacherByNum(login.getUser().getNumber()))
-                .filter(u->passwordEncoder.matches(login.getPassword(),u.getPassword()))
+    public Map login(@RequestBody Map<String,String> login, HttpServletResponse response){
+        Teacher teacher= Optional.ofNullable(userService.getTeacherByNum(Integer.valueOf(login.get("number"))))
+                .filter(u->passwordEncoder.matches(login.get("password"),u.getPassword()))
                 .orElseThrow(()->new ResponseStatusException(HttpStatus.UNAUTHORIZED,"用户名或密码错误"));
         MyToken myToken=new MyToken(teacher.getId(),teacher.getUser().getRole());
         String auth=encryptComponent.encryptToken(myToken);

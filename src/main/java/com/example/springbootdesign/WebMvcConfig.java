@@ -17,7 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         //有顺序 先登录 再看权限
         registry.addInterceptor(loginInterceptor)
                 .addPathPatterns("/api/**")
-                .excludePathPatterns("/login");
+                .excludePathPatterns("/api/login");
 
 
     }

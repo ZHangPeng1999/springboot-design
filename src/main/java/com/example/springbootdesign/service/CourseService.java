@@ -77,6 +77,10 @@ public class CourseService {
         directionRepository.save(dir);
         return dir;
     }
+    public Direction addDirection(Direction direction){
+        directionRepository.save(direction);
+        return direction;
+    }
     public Direction updateDirection(Integer id,String name){
         Direction dir=directionRepository.findById(id).orElse(null);
         if(dir!=null) {
@@ -151,5 +155,9 @@ public class CourseService {
         courseRepository.save(course);
         courseRepository.refresh(course);
         return  course;
+    }
+
+    public List<Course> listCourses() {
+        return courseRepository.findAll();
     }
 }

@@ -99,5 +99,11 @@ Service层：
 + LoginIntercept：拦截request请求，解密前端携带的authorization,将用户id，role添加到request携带内容中，便于后端处理数据时使用id，role
 + WebMvcConfig: 声明拦截器拦截策略，因为用户id，role需要通过LoginIntercept获取，因此除了登录请求所有的请求都需要通过LoginIntercept拦截
 
-
-    
+## 2020.5.24
+### 添加控制类
++ LoginCollector 登录 获取账号密码 登录账号 将Authorization和Role返回给前端
++ StudentCollector 学生控制类 包含学生权限可获取的一系列资源，可进行的一系列修改
++ TeacherCollector 教师控制类 包含教师权限可获取的一系列资源，可进行的一系列修改
++ AdminCollector 管理员控制类     管理员权限课获取的一系列资源，可进行的一系列修改
+### 调整服务类
+对于部分需要但之前没有写入的服务类方法，进行添加。

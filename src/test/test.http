@@ -3,9 +3,8 @@ Content-Type: application/json
 
 {
   "password": "root",
-  "user": {
-    "number": "1001"
-  }
+  "number": "1001"
+
 
 }
 
@@ -23,5 +22,56 @@ Authorization: {{token}}
 {
   "name": "java"
 }
+
+###
+POST http://localhost:8080/api/teacher/direction
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+   "name":"小程序"
+}
+
+###
+POST http://localhost:8080/api/teacher/student
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "user": {
+    "name": "张三",
+    "number": "2017214215"
+  }
+}
+
+###
+POST http://localhost:8080/api/teacher/preStudent
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "user": {
+    "number": "2017214215"
+  }
+}
+
+###
+GET  http://localhost:8080/api/admin/teachers
+Authorization: {{token}}
+
+###
+POST http://localhost:8080/api/admin/teacher
+Content-Type: application/json
+Authorization: {{token}}
+
+{
+  "user": {
+  "number": "201111111",
+  "name": "王五"}
+}
+
+###
+GET  http://localhost:8080/api/admin/index
+Authorization: {{token}}
 
 ###

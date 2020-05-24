@@ -16,9 +16,6 @@ public class Student {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private Boolean isSelectRoot;//是否在老师选择范围内
-
-
-
     @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.REMOVE})
     @MapsId
     private User user;

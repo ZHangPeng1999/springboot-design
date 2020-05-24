@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
 
 //所有与用户相关的服务 都放在UserService 包括 学生/老师等
 @Service
@@ -71,7 +73,9 @@ public class UserService {
         teacher.setUser(user);
         return teacherRepository.save(teacher);
     }
-
+    public Teacher addTeacher(Teacher teacher){
+        return teacherRepository.save(teacher);
+    }
     /**
      * 修改教师密码 姓名
      */
@@ -115,7 +119,7 @@ public class UserService {
      * @param StudentName
      * @return
      */
-    public Student preAddStudent(Integer studentId, Integer TeacherId, String StudentName){
+    public Student addPreStudent(Integer studentId, Integer TeacherId, String StudentName){
         Student stu=studentRepository.find(studentId);
         Teacher tea=teacherRepository.findById(TeacherId).orElse(null);
         if(stu==null){
@@ -146,7 +150,10 @@ public class UserService {
         }
         return List.of();
     }
-
+    public List<Teacher> listTeachers(){
+        List<Teacher> teachers = teacherRepository.findAll();
+        return teachers;
+    }
 
 
     /**
@@ -172,6 +179,9 @@ public class UserService {
         stu.setUser(user);
         studentRepository.save(stu);
     }
+    public void addStudent(Student student){
+        studentRepository.save(student);
+    }
 
     /**
      * 学生选择导师
@@ -180,13 +190,22 @@ public class UserService {
      * @return 选择是否成功
      */
     public Boolean updateStudent(Integer studentId,Integer teacherId){
-        Student stu=studentRepository.find(studentId);
+        Student stu=studentRepository.findById(studentId).orElse(null);
         if(stu.getIsSelectRoot().equals(true)){
-            Teacher tea=teacherRepository.findById(teacherId).orElse(null);
-            if(tea.getStudents().size()<tea.getSelectStudentNum()) {
-                stu.setTeacher(tea);
-                return true;
+            Lock lock=new ReentrantLock();
+            lock.lock();
+            try {
+                Teacher tea=teacherRepository.findById(teacherId).orElse(null);
+                if(tea.getStudents().size()<tea.getSelectStudentNum()) {
+                    stu.setTeacher(tea);
+                    return true;
+                }
+            }catch (Exception e){
+                throw e;
+            }finally {
+                lock.unlock();
             }
+
         }
         return false;
     }
@@ -204,4 +223,7 @@ public class UserService {
     }
 
 
+    public List<Student> listStudents() {
+        return studentRepository.findAll();
+    }
 }
