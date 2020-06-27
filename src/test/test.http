@@ -3,7 +3,7 @@ Content-Type: application/json
 
 {
   "password": "root",
-  "number": "1001"
+  "username": "1001"
 
 
 }
@@ -29,7 +29,7 @@ Content-Type: application/json
 Authorization: {{token}}
 
 {
-   "name":"小程序"
+   "name":"小程序2"
 }
 
 ###
@@ -66,12 +66,22 @@ Authorization: {{token}}
 
 {
   "user": {
-  "number": "201111111",
-  "name": "王五"}
+    "number": "2017214200",
+    "name": "王五"
+  },
+  "password": "123456"
 }
 
 ###
 GET  http://localhost:8080/api/admin/index
+Authorization: {{token}}
+
+###
+GET  http://localhost:8080/api/student/directionsByTeacherId/1
+Authorization: {{token}}
+
+###
+GET http://localhost:8080/api/teacher/selectRoot
 Authorization: {{token}}
 
 ###

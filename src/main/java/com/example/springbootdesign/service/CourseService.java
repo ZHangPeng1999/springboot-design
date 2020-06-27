@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.swing.*;
 import java.util.List;
 
 //所有与课程/方向相关的服务都放在CourseService
@@ -26,6 +25,8 @@ public class CourseService {
     private StudentRepository studentRepository;
     @Autowired
     private TeacherRepository teacherRepository;
+    @Autowired
+    private UserService userService;
     /**
      * 添加课程
      * @param teacherId
@@ -96,13 +97,32 @@ public class CourseService {
      * @param courseId
      * @return
      */
-    public CourseElective addCourseElective(Integer studentId, Integer courseId){
+    public CourseElective addCourseElective(Integer studentId, Integer courseId,Float grade,String detail){
         CourseElective courseElective =new CourseElective();
         Course course=courseRepository.findById(courseId).orElse(null);
-        Student student=studentRepository.findById(studentId).orElse(null);
-        if(student!=null&&course!=null){
+        Student student=studentRepository.find(studentId);
+        if(course!=null&&student!=null){
             courseElective.setStudent(student);
             courseElective.setCourse(course);
+            courseElective.setGrade(Float.valueOf(grade));
+            courseElective.setDetail(detail);
+            courseElectiveRepository.save(courseElective);
+        }
+        return courseElective;
+
+    }
+    public CourseElective addCourseElective(Integer studentId,String studentName,Integer courseId,Float grade){
+        CourseElective courseElective =new CourseElective();
+        Course course=courseRepository.findById(courseId).orElse(null);
+        Student student=studentRepository.find(studentId);
+        if(student==null){
+           student=userService.addStudent(studentId, studentName);
+        }
+
+        if(course!=null){
+            courseElective.setStudent(student);
+            courseElective.setCourse(course);
+            courseElective.setGrade(Float.valueOf(grade));
             courseElectiveRepository.save(courseElective);
         }
         return courseElective;
@@ -116,7 +136,9 @@ public class CourseService {
     public List<Course> listCourse(Integer id){
         return courseRepository.list(id);
     }
-
+    public List<Course> listCourseByTeacherId(Integer id){
+        return courseRepository.listByTid(id);
+    }
 //  方向
     /**
      * 添加学生方向关联
@@ -135,6 +157,20 @@ public class CourseService {
         return directionElective;
 
     }
+    public Boolean addDirectionElective(Integer studentId,List<Integer> directionsId){
+        Student student= studentRepository.findById(studentId).orElse(null);
+        directionsId.forEach(directionId->{
+            DirectionElective directionElective = new DirectionElective();
+            Direction direction=directionRepository.findById(directionId).orElse(null);
+            if(student!=null&&direction!=null){
+                directionElective.setDirection(direction);
+                directionElective.setStudent(student);
+                directionElectiveRepository.save(directionElective);
+            }
+        });
+        return true;
+
+    }
     /**
      * 返回所有方向
      * @return
@@ -147,10 +183,12 @@ public class CourseService {
      * @param id
      * @return
      */
-    public List<Direction> listDirections(Integer id){
+    public List<Direction> listDirectionsByStudentId(Integer id){
         return directionRepository.list(id);
     }
-
+    public List<Direction> listDirectionsByTeacherId(Integer id){
+        return directionRepository.listByteacherId(id);
+    }
     public Course addCourse(Course course) {
         courseRepository.save(course);
         courseRepository.refresh(course);
@@ -159,5 +197,37 @@ public class CourseService {
 
     public List<Course> listCourses() {
         return courseRepository.findAll();
+    }
+    public Boolean deleteCourse(Integer Cid){
+        courseRepository.deleteById(Cid);
+        return  true;
+    }
+    public Boolean deleteDirection(Integer Did){
+        directionRepository.deleteById(Did);
+        return  true;
+    }
+    public List<CourseElective> listCourseElectiveByCid(Integer Cid){
+       return courseElectiveRepository.listByCid(Cid);
+    }
+    public List<CourseElective> listCourseElectiveBySid(Integer Sid){
+        return courseElectiveRepository.listBySid(Sid);
+    }
+    public List<DirectionElective> listDirectionElectiveByDid(Integer Did){
+        return directionElectiveRepository.listByDid(Did);
+    }
+    public List<DirectionElective> listDirectionElectiveBySid(Integer Sid){
+        return directionElectiveRepository.listBySid(Sid);
+    }
+    public Boolean deleteCourseElective(Integer cid){
+        courseElectiveRepository.deleteById(cid);
+        return true;
+    }
+    public CourseElective updateCourseElective(Integer cid,Float grade,String detail){
+        CourseElective courseElective = courseElectiveRepository.findById(cid).orElse(null);
+        if(courseElective!=null){
+            courseElective.setDetail(detail);
+            courseElective.setGrade(grade);
+        }
+        return courseElective;
     }
 }

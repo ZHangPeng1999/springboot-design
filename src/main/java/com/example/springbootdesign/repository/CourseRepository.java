@@ -14,4 +14,6 @@ public interface CourseRepository extends BaseRepository<Course,Integer> {
     List<Course> list();
     @Query("select c.course from CourseElective c where c.student.id=:id")
     List<Course> list(@Param("id")Integer id);
+    @Query("select c from Course c where c.teacher.user.id=:id")
+    List<Course> listByTid(@Param("id")Integer id);
 }

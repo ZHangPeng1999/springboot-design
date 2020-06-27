@@ -13,4 +13,6 @@ public interface DirectionRepository extends BaseRepository<Direction,Integer>{
     List<Direction> list();
     @Query("select d.direction from DirectionElective d where d.student.id=:id")
     List<Direction> list(@Param("id")Integer id);
+    @Query("select d from Direction d where d.teacher.id=:id")
+    List<Direction> listByteacherId(@Param("id")Integer id);
 }
